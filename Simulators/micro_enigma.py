@@ -1,4 +1,4 @@
-from microbit import uart, display
+from microbit import uart
 from random import seed, randint
 
 # initialise serial comms

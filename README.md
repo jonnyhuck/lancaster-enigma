@@ -44,3 +44,4 @@ This repo contains:
 * **Communication_ Demos** *(A simple demo of how to communicate between a Raspberry Pi and BBC Microbit)*
   * `micro_serial_rw.py`: an extremely simple implementation of reading and writing to USB for a BBC Microbit. Can be used with `serial_rw.py` for demonstration purposes.
   * `pi_serial_rw.py`: an extremely simple implementation of reading and writing to USB for a Raspberry Pi. Can be used with `microbit_serial_rw.py` for demonstration purposes.
+  * `micro_radio.py`: a simple demo of how to communicate between BBC Microbits using the built in radio interface.
