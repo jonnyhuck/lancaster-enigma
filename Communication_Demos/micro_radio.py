@@ -35,24 +35,24 @@ while True:
         if int(msg_components[0]) == my_id:
             display.show(str(my_id))
 
-        # wait 1 second
-        sleep(1000)
-        
-        # get forward flag as Boolean value from the message
-        forward = msg_components[1] == "True"
-        
-        # flip forward flag for reflectors
-        if my_id in [1, 3]: 
-            forward = not forward
-        
-        # work out next destination
-        destination = my_id + 1 if forward else my_id - 1
-        
-        # pass on the message
-        radio.send(str(destination) + "|"+ str(forward) +"|" + "Test")
-        display.clear()
+            # wait 1 second
+            sleep(1000)
+            
+            # get forward flag as Boolean value from the message
+            forward = msg_components[1] == "True"
+            
+            # flip forward flag for reflectors
+            if my_id in [1, 3]: 
+                forward = not forward
+            
+            # work out next destination
+            destination = my_id + 1 if forward else my_id - 1
+            
+            # pass on the message
+            radio.send(str(destination) + "|"+ str(forward) +"|" + "Test")
+            display.clear()
     
     # also send a message if button a is pressed
     if button_a.was_pressed():
-        radio.send(str(destination) + "|"+ str(forward) +"|" + "Test")
+        radio.send("2|True|Test")
         display.clear()
