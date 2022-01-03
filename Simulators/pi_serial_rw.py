@@ -8,17 +8,18 @@ A simple demo of reading and writing between a Raspberry Pi and BBC Microbit ove
 from serial import Serial
 from os import path, listdir, system as os_system
 
-while True:
+# clear the console
+os_system('clear')
 
-    # clear the console
-    os_system('clear')
+# infinite loop (allow multiple inputs)
+while True:
 
     # start user output
     print(f"\nWelcome to the Lancaster Enigma")
     print(f"Enter '/exit' or '/x', or use Ctrl+C to exit\n")
 
     # read in message from the user
-    string_in = input("Enter message to encrypt / decrypt: \n")
+    string_in = input("\nEnter message to encrypt / decrypt:\n")
 
     # end on /exit command
     if string_in in ["/exit", "/x"]:
@@ -52,7 +53,7 @@ while True:
         print("No serial device connected")
         exit(1)
 
-    # infinite loop
+    # infinite loop (keep trying to read USB)
     while True:
 
         # try to read from the serial interface
