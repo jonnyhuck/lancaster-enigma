@@ -4,14 +4,13 @@
 
 This repository contains code used by [345 (City of Lancaster) Squadron Air Cadets](https://lancasteraircadets.co.uk/) to create an Enigma machine out of a [Raspberry Pi](https://www.raspberrypi.org/) and several [BBC Microbits](https://www.bbc.co.uk/programmes/articles/4hVG2Br1W1LKCmw8nSm9WnQ/the-bbc-micro-bit) using [Python](https://www.python.org/). 
 
-The project for the cadets was to build an Enigma simulator in which each major component of the Enigma device (plugboard, rotor, reflector) was represented by a separate BBC Microbit, with a Raspberry Pi used as the interface. The Microbits talk to each other via Radio, and to the Raspberry Pi using over USB. The code in the `Enigma_Components` directory is all you need to replicate this. The other sections comprise Enigma simulators that can be run either directly on any machine (`enigma.py`) or between a Raspberry Pi and a single BBC Microbit; and simple demos for how to communicate over USB between a Raspberry Pi and BBC Microbit.
+The project for the cadets was to build an Enigma simulator in which each major component of the Enigma device (plugboard, rotor, reflector) was represented by a separate BBC Microbit, with a Raspberry Pi used as the interface. The Microbits talk to each other via Radio, and to the Raspberry Pi using over USB. The code in the `Enigma_Components` directory is all you need to replicate this. The other sections comprise Enigma simulators that can be run either directly on any machine (`enigma.py`) or between a Raspberry Pi and a single BBC Microbit (`enigma_serial.py` and `micro_enigma.py` respectively); as well as simple demos for how to communicate over USB between a Raspberry Pi and BBC Microbit.
 
 ## Enigma Implementation
 
-This implementation follows the description by Singh (2002). This is intended to be divided up into a series 
-of BBC Microbits for the purpose of building a simple demonstration model of an Enigma machine - it is written with this in mind and to maximise simplicity and readability, rather than efficiency or programming best practice. In particular, it uses a very simple rotor model, which is randomly generated and does not have a 'ring' setting.
+This implementation follows the description by Singh (2002). This is intended to be divided up into a series of BBC Microbits for the purpose of building a simple demonstration model of an Enigma machine - it is written with this in mind and to maximise simplicity and readability and to facilitate learning, rather than efficiency or programming best practice. In particular, it uses a very simple rotor model, which is randomly generated (in the simulators) or hard coded (in the components) and does not have a 'ring' setting.
 
-In the reference implementation (`Enigma_Simulators/enigma.py` or `Enigma_Simulators/microbit_enigma.py`), each submitted character goes through:
+In the reference implementation (`Enigma_Simulators/enigma.py` or `Enigma_Simulators/micro_enigma.py`), each submitted character goes through:
  - a plugboard (each wire on the plugboard will be one microbit)
  - three rotors (each rotor will be one microbit)
  - a reflector (one microbit)
