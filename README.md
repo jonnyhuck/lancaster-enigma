@@ -38,8 +38,8 @@ This repo contains:
   * `reflector.py`: an implementation of a simple reflector for which the wiring is hard coded  (runs on BBC Microbit).
 * **Enigma_Simulators** *(Enigma Simulators that can be run directly on a Raspberry Pi alone, or with one BBC Microbit)*
   * `enigma.py`: a pure Python 3 implementation of a simple enigma simulator, complete with interactive terminal. This code can be used on any computer with Python 3 installed (Windows, Linux, Mac), but not on a BBC Microbit.
-  * `micro_enigma.py`: an implementation of the simple enigma simulator that can be run on a BBC Microbit. The input and output is via USB, which can be achieved using `pi_enigma.py`.
-  * `pi_enigma.py`: an interactive terminal for use on a Raspberry Pi to interact with `micro_enigma.py`.
+  * `micro_enigma.py`: an implementation of the simple enigma simulator that can be run on a BBC Microbit. The input and output is via USB, which can be achieved using `enigma_serial.py`.
+  * `enigma_serial.py`: an interactive terminal for use on a Raspberry Pi to interact with `micro_enigma.py`.
 * **Communication_ Demos** *(A simple demo of how to communicate between a Raspberry Pi and BBC Microbit)*
   * `micro_serial_rw.py`: an extremely simple implementation of reading and writing to USB for a BBC Microbit. Can be used with `serial_rw.py` for demonstration purposes.
   * `pi_serial_rw.py`: an extremely simple implementation of reading and writing to USB for a Raspberry Pi. Can be used with `microbit_serial_rw.py` for demonstration purposes.
