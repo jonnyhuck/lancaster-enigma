@@ -32,10 +32,10 @@ When the code in `Enigma_Components`is used to make the demo using BBC Microbits
 This repo contains:
 
 * **Enigma_Components** *(individual components that are used to build an Enigma Simulator using a Raspberry Pi and three or more BBC Microbits as described above)*
-  * `input.py`: a simple interactive terminal to provide a keyboard and screen interface to the BBC Microbits (runs on Raspberry Pi).
-  * `plug.py`: an implementation of a single pair of plugs on a plug board (runs on BBC Microbit).
-  * `rotor.py`: an implementation of a simple rotor for which the wiring is randomly generated and there is no ring setting - see above (runs on BBC Microbit).
-  * `reflector.py`: an implementation of a simple reflector for which the wiring is randomly generated  (runs on BBC Microbit).
+  * `1.input.py`: a simple interactive terminal to provide a keyboard and screen interface to the BBC Microbits (runs on Raspberry Pi).
+  * `2.plug.py`: an implementation of a single pair of plugs on a plug board (runs on BBC Microbit).
+  * `3.rotor1.py`, `4.rotor2.py`, `5.rotor3.py`: implementations of a simple rotor for which the wiring is hard coded and there is no ring setting - see above (runs on BBC Microbit). There are three separate files to handle the different rates of advancement of each of the rotors.
+  * `reflector.py`: an implementation of a simple reflector for which the wiring is hard coded  (runs on BBC Microbit).
 * **Enigma_Simulators** *(Enigma Simulators that can be run directly on a Raspberry Pi alone, or with one BBC Microbit)*
   * `enigma.py`: a pure Python 3 implementation of a simple enigma simulator, complete with interactive terminal. This code can be used on any computer with Python 3 installed (Windows, Linux, Mac), but not on a BBC Microbit.
   * `micro_enigma.py`: an implementation of the simple enigma simulator that can be run on a BBC Microbit. The input and output is via USB, which can be achieved using `pi_enigma.py`.
