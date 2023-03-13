@@ -7,46 +7,48 @@ You need to set `my_id` and `r_to` prior to use
 """
 
 import radio
-from microbit import display, Image
+from microbit import display
 
 
 def apply_encryption(msg, forward):
     """
     Apply the encryptionstep associated with this component
     """
+
     # loop through each character in the message
     out = ""
+    global r_to
     for counter, char in enumerate(msg):
+    
+        # advance the rotor one position (every complete revolution of rotor 1)
+        if counter % len(r_from) == 0:
+            r_to = advance_rotor(r_to)
 
-        # we are only encrypting letters at the moment - anything else goes straight back
+        # we are only encrypting letters at the moment - anything else remains unchanged
         if char not in r_from:
-            return char
+            out += char
 
         # run forwards through the rotor
-        if forward:
-            out += r_from[r_to.index(char)]
+        elif forward:
+            out += r_to[r_from.index(char)]
         
         # run backwards through the rotor
         else:
-            out += r_to[r_from.index(char)]
-        
-        # advance the rotor one position (every complete revolution of rotor 1)
-        if counter % len(r_from) == 0:
-            advance_rotor()
+            out += r_from[r_to.index(char)]
 
+    # return the result
     return out
 
 
-def advance_rotor(n=1):
+def advance_rotor(rotor, n=1):
     """
     Advance a rotor n positions
     """
-    # do it n times
+    # move each letter one place along the alphabet n times
     for _ in range(n):
-
-        # increase each letter one place along the alphabet
-        for j in range(len(r_to)):
-            r_to[j] = r_from[(r_from.index(r_to[j]) + 1) % len(r_from)]
+        for j in range(len(rotor[1])):
+            rotor[1][j] = r_from[(r_from.index(rotor[1][j]) + 1) % len(r_from)]
+    return rotor
 
 
 # the id of this device - should denote the devices position in the Enigma
@@ -75,9 +77,6 @@ while True:
 
         # if the message is for me
         if int(msg_components[0]) == my_id:
-
-            # update display
-            display.show(Image.YES)
             
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
@@ -90,6 +89,3 @@ while True:
             
             # pass on the message
             radio.send(str(destination) + "|" + str(forward) + "|" + str(msg))
-
-            # update display
-            display.show(str(my_id))

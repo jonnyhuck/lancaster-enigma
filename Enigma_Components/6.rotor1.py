@@ -7,55 +7,57 @@ You need to set `my_id` and `r_to` prior to use
 """
 
 import radio
-from microbit import display, Image
+from microbit import display
 
 
 def apply_encryption(msg, forward):
     """
     Apply the encryptionstep associated with this component
     """
+
     # loop through each character in the message
     out = ""
-    for counter, char in enumerate(msg):
+    global r_to
+    for char in msg:
+
+        # advance the rotor one position
+        r_to = advance_rotor(r_to)
 
         # we are only encrypting letters at the moment - anything else goes straight back
         if char not in r_from:
-            return char
+            out += char
 
         # run forwards through the rotor
-        if forward:
-            out += r_from[r_to.index(char)]
+        elif forward:
+            out += r_to[r_from.index(char)]
         
         # run backwards through the rotor
         else:
-            out += r_to[r_from.index(char)]
-        
-        # advance the rotor one position (every complete revolution of rotor 2)
-        if counter % len(r_from**2) == 0:
-            advance_rotor()
-
+            out += r_from[r_to.index(char)]
+    
+    # return the result
     return out
 
 
-def advance_rotor(n=1):
+def advance_rotor(rotor, n=1):
     """
     Advance a rotor n positions
     """
-    # do it n times
+    # move each letter one place along the alphabet n times
     for _ in range(n):
-
-        # increase each letter one place along the alphabet
-        for j in range(len(r_to)):
-            r_to[j] = r_from[(r_from.index(r_to[j]) + 1) % len(r_from)]
+        for j in range(len(rotor[1])):
+            rotor[j] = r_from[(r_from.index(rotor[j]) + 1) % len(r_from)]
+    return rotor
 
 
 # the id of this device - should denote the devices position in the Enigma
-my_id = 8
+my_id = 6
 display.show(str(my_id))
 
 # init rotors
+global r_to
 r_from  = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-r_to    = ['E', 'P', 'C', 'Y', 'H', 'J', 'Z', 'G', 'A', 'D', 'X', 'R', 'N', 'F', 'Q', 'S', 'L', 'U', 'V', 'B', 'T', 'K', 'O', 'W', 'M', 'I']
+r_to    = ['K', 'W', 'C', 'S', 'J', 'F', 'R', 'V', 'L', 'E', 'N', 'P', 'I', 'O', 'Y', 'M', 'D', 'U', 'A', 'T', 'Z', 'B', 'H', 'X', 'G', 'Q']
 
 # set radio group (has to be the same for all components)
 radio.config(group=41)
@@ -75,9 +77,6 @@ while True:
 
         # if the message is for me
         if int(msg_components[0]) == my_id:
-
-            # update display
-            display.show(Image.YES)
             
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
@@ -90,6 +89,3 @@ while True:
             
             # pass on the message
             radio.send(str(destination) + "|" + str(forward) + "|" + str(msg))
-
-            # update display
-            display.show(str(my_id))

@@ -1,13 +1,12 @@
 """
 This script is for the 'plugboard' microbits (green #2-5)
 It represents a single set of plugs on the plugboard that redirects one character to another and vice versa
-There can be as many of these as you like in the system
 
 You need to set `my_id`, `plug_from` and `plug_to` before use.
 """
 
 import radio
-from microbit import display, Image
+from microbit import display
 
 
 def apply_encryption(msg):
@@ -18,11 +17,9 @@ def apply_encryption(msg):
         character with its counterpart
     """
 
-    # loop through each character in the message
+    # loop through each character in the message, swap it if/as required
     out = ""
     for char in msg:
-        
-        # swap it if/as required
         if char == plug_from:
             out += plug_to
         elif char == plug_to:
@@ -35,12 +32,12 @@ def apply_encryption(msg):
 
 
 # the id of this device - should denote the devices position in the Enigma
-my_id = 2
+my_id = 5
 display.show(str(my_id))
 
 # set the plugs
-plug_from = 'R'
-plug_to   = 'J'
+plug_from = 'A'
+plug_to   = 'C'
 
 # set radio group (has to be the same for all components)
 radio.config(group=41)
@@ -61,9 +58,6 @@ while True:
         # if the message is for me
         if int(msg_components[0]) == my_id:
 
-            # update display
-            display.show(Image.YES)
-
             # apply the encryption step for this device
             msg = apply_encryption(msg_components[2])
             
@@ -75,6 +69,3 @@ while True:
             
             # pass on the message
             radio.send(str(destination) + "|" + str(forward) + "|" + str(msg))
-
-            # update display
-            display.show(str(my_id))

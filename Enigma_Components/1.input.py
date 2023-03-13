@@ -11,7 +11,7 @@ TODO: This must be run on one of the older microbits (with shiny surface) - the 
 """
 
 import radio
-from microbit import uart, display, Image
+from microbit import uart, display
 
 # initialise serial comms
 uart.init(baudrate=19200)
@@ -37,14 +37,8 @@ while True:
     # if there is a message
     if msg != None:
 
-        # update display
-        display.show(Image.YES)
-        
         # convert the message from bytes to string and pass on the message via radio
         radio.send(str(2) + "|True|" + str(msg, 'UTF-8'))
-
-        # update display
-        display.show(str(my_id))
         
 
     ''' RADIO -> SERIAL'''
@@ -60,12 +54,6 @@ while True:
 
         # if the message is for me
         if int(msg_components[0]) == my_id:
-
-            # update display
-            display.show(Image.YES)
             
             # write the result direct to serial
             uart.write(msg_components[2])
-
-            # update display
-            display.show(str(my_id))
