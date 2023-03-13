@@ -7,7 +7,7 @@ You need to set `my_id` (should be the highest number in the system) and `r_to` 
 """
 
 import radio
-from microbit import display
+from microbit import display, Image
 
 
 def apply_encryption(msg):
@@ -17,6 +17,10 @@ def apply_encryption(msg):
     # loop through each character in the message
     out = ""
     for char in msg:
+
+        # we are only encrypting letters at the moment - anything else goes straight back
+        if char not in r1 + r2:
+            return char
 
         # run forwards through the rotor
         if char in r1:
@@ -54,15 +58,21 @@ while True:
 
         # if the message is for me
         if int(msg_components[0]) == my_id:
+
+            # update display
+            display.show(Image.YES)
             
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
 
             # apply the encryption step for this device
-            msg = apply_encryption(msg_components[2], forward)
+            msg = apply_encryption(msg_components[2])
             
             # flip forward flag (as it is the reflector)
             forward = False
             
             # pass on the message
             radio.send(str(my_id - 1) + "|" + str(forward) + "|" + str(msg))
+
+            # update display
+            display.show(str(my_id))

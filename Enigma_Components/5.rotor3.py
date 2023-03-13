@@ -7,7 +7,7 @@ You need to set `my_id` and `r_to` prior to use
 """
 
 import radio
-from microbit import display
+from microbit import display, Image
 
 
 def apply_encryption(msg, forward):
@@ -17,6 +17,10 @@ def apply_encryption(msg, forward):
     # loop through each character in the message
     out = ""
     for counter, char in enumerate(msg):
+
+        # we are only encrypting letters at the moment - anything else goes straight back
+        if char not in r_from:
+            return char
 
         # run forwards through the rotor
         if forward:
@@ -46,7 +50,7 @@ def advance_rotor(n=1):
 
 
 # the id of this device - should denote the devices position in the Enigma
-my_id = 6
+my_id = 8
 display.show(str(my_id))
 
 # init rotors
@@ -71,6 +75,9 @@ while True:
 
         # if the message is for me
         if int(msg_components[0]) == my_id:
+
+            # update display
+            display.show(Image.YES)
             
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
@@ -83,3 +90,6 @@ while True:
             
             # pass on the message
             radio.send(str(destination) + "|" + str(forward) + "|" + str(msg))
+
+            # update display
+            display.show(str(my_id))

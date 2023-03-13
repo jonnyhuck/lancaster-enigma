@@ -7,7 +7,7 @@ You need to set `my_id`, `plug_from` and `plug_to` before use.
 """
 
 import radio
-from microbit import display
+from microbit import display, Image
 
 
 def apply_encryption(msg):
@@ -19,6 +19,7 @@ def apply_encryption(msg):
     """
 
     # loop through each character in the message
+    out = ""
     for char in msg:
         
         # swap it if/as required
@@ -60,6 +61,9 @@ while True:
         # if the message is for me
         if int(msg_components[0]) == my_id:
 
+            # update display
+            display.show(Image.YES)
+
             # apply the encryption step for this device
             msg = apply_encryption(msg_components[2])
             
@@ -71,3 +75,6 @@ while True:
             
             # pass on the message
             radio.send(str(destination) + "|" + str(forward) + "|" + str(msg))
+
+            # update display
+            display.show(str(my_id))
