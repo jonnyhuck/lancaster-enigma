@@ -31,7 +31,7 @@ def apply_encryption(msg, forward, r_to):
             out += r_from[r_to.index(char)] if char in r_to else char
             
     # return the result
-    return out
+    return out, r_to
 
 
 def advance_rotor(rotor, n=1):
@@ -52,6 +52,7 @@ my_id = 5
 global r_to
 r_from  = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 r_bk    = ['Z', 'W', 'F', 'R', 'U', 'I', 'C', 'M', 'X', 'S', 'Q', 'O', 'P', 'E', 'G', 'A', 'T', 'B', 'H', 'L', 'Y', 'V', 'K', 'N', 'D', 'J']
+r_to = []
 
 # turn on and configure the radio interface
 radio.on()
@@ -75,11 +76,12 @@ while True:
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
 
-            # init / reset the rotor
-            r_to = r_bk.copy()
+            # init / reset the rotor in forward direction only
+            if forward:
+                r_to = r_bk.copy()
 
             # apply the encryption step for this device
-            encrypted = apply_encryption(msg_components[2].upper(), forward, r_to)
+            encrypted, r_to = apply_encryption(msg_components[2].upper(), forward, r_to)
             
             # work out next destination
             destination = my_id + 1 if forward else my_id - 1
