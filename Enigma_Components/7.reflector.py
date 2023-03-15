@@ -7,7 +7,7 @@ You need to set `my_id` (should be the highest number in the system) and `r_to` 
 """
 
 import radio
-from microbit import display
+from microbit import display, sleep
 
 
 def apply_encryption(msg):
@@ -35,18 +35,17 @@ def apply_encryption(msg):
 
 
 # the id of this device - should denote the devices position in the Enigma
-my_id = 9
-display.show(str(my_id))
+my_id = 4
 
 # init reflector (13 matched pairs)
 r1 = ['R', 'K', 'U', 'Q', 'H', 'I', 'F', 'G', 'D', 'V', 'M', 'W', 'A']
 r2 = ['Y', 'Z', 'O', 'B', 'S', 'J', 'C', 'P', 'N', 'X', 'E', 'T', 'L']
 
-# set radio group (has to be the same for all components)
-radio.config(group=41)
-
 # turn on the radio interface
 radio.on()
+
+# set radio group
+radio.config(group=1)
 
 # infinite loop
 while True:
@@ -60,15 +59,22 @@ while True:
 
         # if the message is for me
         if int(msg_components[0]) == my_id:
-            
-            # get forward flag as Boolean value from the message
-            forward = msg_components[1] == "True"
+            display.show(str(my_id))
+            sleep(int(msg_components[3]))
   
             # apply the encryption step for this device
-            msg = apply_encryption(msg_components[2])
+            encrypted = apply_encryption(msg_components[2].upper())
+
+            # get forward flag as Boolean value from the message
+            forward = msg_components[1] == "True"
+
+            # reverse direction
+            forward = not forward
             
-            # flip forward flag (as it is the reflector)
-            forward = False
-            
+            # work out next destination
+            destination = my_id + 1 if forward else my_id - 1
+
             # pass on the message
-            radio.send(str(my_id - 1) + "|" + str(forward) + "|" + str(msg))
+            radio.send("|".join([str(destination), str(forward), encrypted, msg_components[3]]))
+            display.clear()
+            
