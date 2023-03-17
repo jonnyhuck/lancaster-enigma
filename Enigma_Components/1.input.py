@@ -42,8 +42,8 @@ while True:
         # if it is the end (...$) compile and send it
         if current[-1] == "$":
 
-            # append all but the $ to the cache
-            messages.append(current)[:-1]
+            # append all but the tag to the cache
+            messages.append(current[:-1])
             
             # compile the message, send it, empty the cache
             sleep(delay)

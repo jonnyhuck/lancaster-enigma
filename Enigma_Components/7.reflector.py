@@ -1,9 +1,8 @@
 """
 This script is for the 'reflector' microbit (yellow #9)
 It is like a rotor, but also reverses the `forward` flag and is only run once (everything else runs twice)
-There can only be one of these in the system
 
-You need to set `my_id` (should be the highest number in the system) and `r_to` prior to use
+This should have the highest `my_id` number in the system
 """
 
 import radio
@@ -35,7 +34,7 @@ def apply_encryption(msg):
 
 
 # the id of this device - should denote the devices position in the Enigma
-my_id = 4
+my_id = 7
 
 # init reflector (13 matched pairs)
 r1 = ['R', 'K', 'U', 'Q', 'H', 'I', 'F', 'G', 'D', 'V', 'M', 'W', 'A']

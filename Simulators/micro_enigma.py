@@ -98,7 +98,7 @@ def advance_rotor(rotor, n=1):
     Advance a rotor n positions
     """
     # do it n times
-    for i in range(n):
+    for _ in range(n):
 
         # increase each letter one place along the alphabet
         for j in range(len(rotor[1])):

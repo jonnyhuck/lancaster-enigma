@@ -1,8 +1,6 @@
 """
 This script is for the 'plugboard' microbits (green #2-5)
 It represents a single set of plugs on the plugboard that redirects one character to another and vice versa
-
-You need to set `plug_from` and `plug_to` before use.
 """
 
 import radio
