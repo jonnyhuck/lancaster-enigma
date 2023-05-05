@@ -13,11 +13,17 @@ def apply_encryption(msg, forward, rotor):
     """
     # loop through each character in the message
     out = ""
-    for counter, char in enumerate(msg):
+    for count, char in enumerate(msg):
 
-        # advance the rotor one position (once per revolution of rotor 1)
-        # if counter+1 % len(alphabet) == 0:
-        #     rotor = advance_rotor(rotor)
+        # get the character number for this message
+        n = count + 1
+
+        # put the rotor back to the start
+        rotor = build_rotor()
+
+        # advance the rotor the correct number of positions (once per revolution of rotor 1)
+        if n % len(alphabet) == 0:
+            rotor = advance_rotor(rotor, n // len(alphabet))
 
         # run forwards through the rotor (ignore characters not in the rotor)
         if forward:
@@ -31,11 +37,11 @@ def apply_encryption(msg, forward, rotor):
     return out, rotor
 
 
-def advance_rotor(rotor, n=1):
+def advance_rotor(rotor, n):
     """
     Advance a rotor n positions
     """
-    # increase each letter one place along the alphabet, n times
+    # move the offset between the letters forward 1 place, n times
     for _ in range(n):
         for j in range(len(rotor[1])):
                 rotor[1][j] = alphabet[(alphabet.index(rotor[1][j]) + 1) % len(alphabet)]
@@ -80,10 +86,6 @@ while True:
             
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
-
-            # init / reset the rotor in forward direction only
-            if forward:
-                rotor = build_rotor()
 
             # apply the encryption step for this device
             encrypted, rotor = apply_encryption(msg_components[2].upper(), forward, rotor)

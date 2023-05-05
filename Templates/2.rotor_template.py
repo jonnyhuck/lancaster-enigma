@@ -13,14 +13,22 @@ def apply_encryption(msg, forward):
     AND VICE VERSA (when `forward` == `False`).
 
     TO BE ABLE TO WORK IN BOTH DIRECTIONS, YOU WILL NEED TO 'ADVANCE' THE ROTOR BETWEEN EACH CHARACTER.
-    SIMULARTING THIS CORRECTLY WOULD MEAN THAT EACH CHARACTER in `rotor_from` WOULD INHERIT A NEW 
-    COUNTERPART IN `rotor_to` AFTER EACH CHARACTER PASSES THROUGH IT. THE NEW VALUE FOR A CHARACTER 
-    IN WOULD BE THE SAME NUMBER OF POSITIONS IN THE ALPHABET AWAY FROM IT AS THE DISTANCE BETWEEN
-    THE CHARACTER BEFORE IT IN `r_from` AND ITS COUNTERPART IN `r_to`. THIS GIVES THE EFFECT OF THE 
-    WIRING BETWEEN `r_from` and `r_to` ROTATING ONE PLACE. THIS SEEMS COMPLICATED, BUT IS MORE EASILY
-    DEMONSTRATED WITH AN EXAMPLE:
+    """
+    out = msg
+    return out
+
+
+def advance_rotor(rotor, n):
+    """
+    THIS FUNCTION HANDLES 'ADVANCING' THE ROTOR - IT EFFECTIVELY MOVES THE 'WIRING' THAT DEFINES THE 
+    RELATIONSHIP BETWEEN THE LETTER ON EITHJER SIDE OF THE ROTOR.
+
+    AT EACH ADVANCE, THE NEW VALUE FOR A CHARACTER WOULD BE THE SAME NUMBER OF POSITIONS IN THE ALPHABET 
+    AWAY FROM IT AS THE DISTANCE BETWEEN THE CHARACTER BEFORE IT IN `r_from` AND ITS COUNTERPART IN `r_to`. 
+    THIS GIVES THE EFFECT OF THE WIRING BETWEEN `r_from` and `r_to` ROTATING ONE PLACE. THIS SEEMS COMPLICATED, 
+    BUT IS MORE EASILY DEMONSTRATED WITH AN EXAMPLE:
     
-    FOR EXAMPLE, THAT IF THE ROTOR LOOKED LIKE THIS
+    FOR EXAMPLE, IF THE ROTOR LOOKED LIKE THIS
         A -> D (+3)
         B -> F (+4)
         C -> M (+10)
@@ -28,17 +36,23 @@ def apply_encryption(msg, forward):
         A -> K (+10)
         B -> E (+3)
         C -> G (+4)
-    """
+    """    
+    # move the offset between the letters forward 1 place, n times
+    for _ in range(n):
+        for j in range(len(rotor[1])):
+                rotor[1][j] = alphabet[(alphabet.index(rotor[1][j]) + 1) % len(alphabet)]
+    return rotor
 
-    # set up rotors (not feel free to change `r_to`!)
-    alphabet  = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+def build_rotor():
+    """
+    THIS FUNCTION SETS (OR RESETS) THE ROTORS TO THEIR ORIGINAL POSITION - YOU CAN CHANGE THE `r_to` LIST
+    BELOW TO CHANGE THE WIRING OF THE ROTOR - JUST MAKE SURE THAT EACH LETTER IS ONLY IN THERE ONCE!
+    """
     r_from  = alphabet.copy()
     r_to = ['K', 'W', 'C', 'S', 'J', 'F', 'R', 'V', 'L', 'E', 'N', 'P', 'I', 
             'O', 'Y', 'M', 'D', 'U', 'A', 'T', 'Z', 'B', 'H', 'X', 'G', 'Q']
-
-    # loop through each character in the message
-    out = msg
-    return out
+    return [r_from, r_to]
 
 
 def test():
@@ -69,12 +83,18 @@ def test():
 
 '''
 `my_id` SETS THE POSITION OF THIS COMPONENT IN THE ENIGMA MACHINE. YOU DON'T 
-NEED TO WORRY ABOUT THIS UNTIL WE JOIN THE MACHINE TOGETHER, BUT WHEN WE DO 
-THIS SHOULD BE THE HIUGHEST NUMBER IN THE WHOLE SYSTEM.
+NEED TO WORRY ABOUT THIS UNTIL WE JOIN THE MACHINE TOGETHER.
 '''
 
 # the id of this device - should denote the devices position in the Enigma
 my_id = 4
+
+
+'''
+THIS DEFINES THE ALPHABET - IT IS USED IN THE CONSTRUCTION OF THE ROTOR
+'''
+alphabet  = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
 
 '''
 BELOW HERE IS THE CODE TO RECEIVE THE DATA PACKET, READ IT, PASS IT TO 
@@ -89,7 +109,7 @@ LINE AND UN-COMMENT THE REST TO REPLACE IT.
 
 test()
 
-# turn on and configure the radio interface
+# # turn on and configure the radio interface
 # radio.on()
 # radio.config(group=1)
 
@@ -110,10 +130,6 @@ test()
             
 #             # get forward flag as Boolean value from the message
 #             forward = msg_components[1] == "True"
-
-#             # init / reset the rotor in forward direction only
-#             if forward:
-#                 rotor = build_rotor()
 
 #             # apply the encryption step for this device
 #             encrypted, rotor = apply_encryption(msg_components[2].upper(), forward, rotor)

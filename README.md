@@ -33,10 +33,10 @@ This repo contains:
 
 * **Enigma_Components** *(individual components that are used to build an Enigma Simulator using a Raspberry Pi and three or more BBC Microbits as described above)*
   * `1.input.py`: a simple interactive terminal to provide a keyboard and screen interface to the BBC Microbits (runs on Raspberry Pi).
-  * `2.plug.py`: an implementation of a single pair of plugs on a plug board (runs on BBC Microbit).
-  * `3.rotor1.py`, `4.rotor2.py`, `5.rotor3.py`: implementations of a simple rotor for which the wiring is hard coded and there is no ring setting - see above (runs on BBC Microbit). There are three separate files to handle the different rates of advancement of each of the rotors.
-  * `reflector.py`: an implementation of a simple reflector for which the wiring is hard coded  (runs on BBC Microbit).
-* **Enigma_Simulators** *(Enigma Simulators that can be run directly on a Raspberry Pi alone, or with one BBC Microbit)*
+  * `2.plug1.py`, `3.plug2.py`: an implementation of a single pair of plugs on a plug board (runs on BBC Microbit).
+  * `4.rotor1.py`, `5.rotor2.py`, `6.rotor3.py`: implementations of a simple rotor for which the wiring is hard coded and there is no ring setting - see above (runs on BBC Microbit). There are three separate files to handle the different rates of advancement of each of the rotors.
+  * `7.reflector.py`: an implementation of a simple reflector for which the wiring is hard coded  (runs on BBC Microbit).
+* **Simulators** *(Enigma Simulators that can be run directly on a Raspberry Pi alone, or with one BBC Microbit)*
   * `enigma.py`: a pure Python 3 implementation of a simple enigma simulator, complete with interactive terminal. This code can be used on any computer with Python 3 installed (Windows, Linux, Mac), but not on a BBC Microbit.
   * `micro_enigma.py`: an implementation of the simple enigma simulator that can be run on a BBC Microbit. The input and output is via USB, which can be achieved using `enigma_serial.py`.
   * `enigma_serial.py`: an interactive terminal for use on a Raspberry Pi to interact with `micro_enigma.py`.
@@ -44,3 +44,5 @@ This repo contains:
   * `micro_serial_rw.py`: an extremely simple implementation of reading and writing to USB for a BBC Microbit. Can be used with `serial_rw.py` for demonstration purposes.
   * `pi_serial_rw.py`: an extremely simple implementation of reading and writing to USB for a Raspberry Pi. Can be used with `microbit_serial_rw.py` for demonstration purposes.
   * `micro_radio.py`: a simple demo of how to communicate between BBC Microbits using the built in radio interface.
+* **Instructions** (*Instructions for how to implement the `plug`, `rotor` and `relector` components using the `Templates`*)
+* **Templates** *(Templates to act as a starting point for implementations of the `plug`, `rotor` and `relector` components using the `Instructions`)*

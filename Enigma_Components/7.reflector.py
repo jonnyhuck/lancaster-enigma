@@ -11,23 +11,23 @@ from microbit import display, sleep
 
 def apply_encryption(msg):
     """
-    Apply the encryptionstep associated with this component
+    Apply the encryption step associated with this component
     """
     # loop through each character in the message
     out = ""
     for char in msg:
 
-        # we are only encrypting letters at the moment - anything else goes straight back
-        if char not in (r1 + r2):
-            out += char
-
-        # run forwards through the rotor
-        elif char in r1:
+        # run through the reflector (r1->r2)
+        if char in r1:
             out += r2[r1.index(char)]
-        
-        # run backwards through the rotor
-        else:
+
+        # run through the reflector (r2->r1)
+        elif char in r2:
             out += r1[r2.index(char)]
+
+        # we are only encrypting letters at the moment - anything else goes straight back
+        else:
+            out += char
 
     # return the result
     return out
