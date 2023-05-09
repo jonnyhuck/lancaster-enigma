@@ -1,6 +1,6 @@
 # # Making a Rotor
 
-First, open the MicroBit Python editor by clicking [here](https://python.microbit.org/v/3){:target="_blank"}, clear all of the code that is in there and and paste in the below code instead - this is a template to get you started:
+First, open the MicroBit Python editor by clicking [here](https://python.microbit.org/v/3), clear all of the code that is in there and and paste in the below code instead - this is a template to get you started:
 
 ```python
 """
@@ -357,12 +357,8 @@ while True:
             # get forward flag as Boolean value from the message
             forward = msg_components[1] == "True"
 
-            # init / reset the rotor in forward direction only
-            if forward:
-                rotor = build_rotor()
-
             # apply the encryption step for this device
-            encrypted, rotor = apply_encryption(msg_components[2].upper(), forward, rotor)
+            encrypted = apply_encryption(msg_components[2].upper(), forward)
             
             # work out next destination
             destination = my_id + 1 if forward else my_id - 1

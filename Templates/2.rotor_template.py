@@ -8,7 +8,7 @@ from microbit import display, sleep
 
 def apply_encryption(msg, forward):
     """
-    THIS FUNCTION NEEDS TO ENCRYPT THE MESSAGE BY FINDING ANY CHARACTERS IN `rotor_from` 
+    THIS FUNCTION NEEDS TO ENCRYPT THE MESSAGE BY FINDING ANY CHARACTERS IN `rotor_from`    
     AND SWAPPING THEM WITH THE CORRESPONDING CHARACTER IN `rotor_to` (WHEN `forward` == `True`)
     AND VICE VERSA (when `forward` == `False`).
 
@@ -132,7 +132,7 @@ test()
 #             forward = msg_components[1] == "True"
 
 #             # apply the encryption step for this device
-#             encrypted, rotor = apply_encryption(msg_components[2].upper(), forward, rotor)
+#             encrypted = apply_encryption(msg_components[2].upper(), forward)
             
 #             # work out next destination
 #             destination = my_id + 1 if forward else my_id - 1

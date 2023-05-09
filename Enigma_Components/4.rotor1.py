@@ -62,7 +62,6 @@ my_id = 4
 
 # setup for rotor
 alphabet  = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-rotor = []
 
 # turn on and configure the radio interface
 radio.on()

@@ -1,6 +1,6 @@
 # # Making a Plug Board
 
-First, open the MicroBit Python editor by clicking [here](https://python.microbit.org/v/3){:target="_blank"}, clear all of the code that is in there and and paste in the below code instead - this is a template to get you started:
+First, open the MicroBit Python editor by clicking [here](https://python.microbit.org/v/3), clear all of the code that is in there and and paste in the below code instead - this is a template to get you started:
 
 ```python
 """
